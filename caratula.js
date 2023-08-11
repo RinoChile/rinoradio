@@ -39,7 +39,7 @@ function doSomething(obj) {
 }
 
 function actualizarCada10Segundos() {
-  fetch('http://audio.streaminghd.cl:9146/stats?json=1&sid=1&rand=' + Math.random())
+  fetch('https://audio.streaminghd.cl:9146/stats?json=1&sid=1&rand=' + Math.random())
     .then(response => response.json())
     .then(data => doSomething(data));
 }
