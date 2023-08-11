@@ -1,0 +1,53 @@
+const lastFmApiKey = '1e9f017ee64cd80a02e9d12cbcdc73a5';
+
+// Función para obtener la información del álbum desde Last.fm
+async function getAlbumInfo(artistName, albumTitle) {
+  const lastFmApiUrl = `https://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist=${encodeURIComponent(artistName)}&album=${encodeURIComponent(albumTitle)}&api_key=${lastFmApiKey}&format=json`;
+
+  try {
+    const response = await fetch(lastFmApiUrl);
+    const data = await response.json();
+
+    if (data && data.album && data.album.image && data.album.image.length > 0) {
+      const largestImage = data.album.image[data.album.image.length - 1]['#text'];
+      // Mostrar la carátula del álbum de la canción en el elemento con id "coverImage"
+      document.getElementById('coverImage').src = largestImage;
+      document.getElementById('coverBackground').src = largestImage;
+    } else {
+      // Si no se encuentra la carátula del álbum, puedes mostrar una imagen por defecto o un mensaje de error
+      document.getElementById('coverImage').src = 'imágenes/caratula.png';
+      document.getElementById('coverBackground').src = 'imágenes/caratula.png';
+    }
+  } catch (error) {
+    console.error('Error al obtener la información del álbum:', error);
+    // Si ocurre un error, puedes mostrar una imagen por defecto o un mensaje de error
+    document.getElementById('coverImage').src = 'imágenes/caratula.png';
+  }
+}
+
+function doSomething(obj) {
+  const songtitle = obj.songtitle;
+  const separatorIndex = songtitle.indexOf(' - ');
+  const artistName = songtitle.slice(0, separatorIndex).trim();
+  const albumTitle = songtitle.slice(separatorIndex + 3).trim();
+
+  document.getElementById('artista').textContent = artistName;
+  document.getElementById('cancion').textContent = albumTitle;
+
+  // Obtener la carátula del álbum de la canción en base al nombre del artista y el título del álbum
+  getAlbumInfo(artistName, albumTitle);
+}
+
+function actualizarCada10Segundos() {
+  fetch('http://audio.streaminghd.cl:9146/stats?json=1&sid=1&rand=' + Math.random())
+    .then(response => response.json())
+    .then(data => doSomething(data));
+}
+
+setInterval(actualizarCada10Segundos, 5000);
+
+
+
+
+
+

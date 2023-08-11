@@ -1,0 +1,31 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const radio = document.getElementById('radio');
+    const playPauseButton = document.getElementById('playPauseButton');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const radioUrl = 'https://stream-40.zeno.fm/8rrehyqb6reuv';
+
+    let isPlaying = false;
+
+    playPauseButton.addEventListener('click', () => {
+        if (isPlaying) {
+            radio.pause();
+            isPlaying = false;
+            playPauseButton.innerHTML = '';
+        } else {
+            radio.src = radioUrl; // Establecer la URL original antes de reproducir
+            radio.play();
+            isPlaying = true;
+            playPauseButton.innerHTML = '';
+        }
+    });
+
+    radio.addEventListener('ended', () => {
+        isPlaying = false;
+        playPauseButton.innerHTML = '▶';
+    });
+
+    volumeSlider.addEventListener('input', () => {
+        const volume = volumeSlider.value;
+        radio.volume = volume;
+    });
+});
