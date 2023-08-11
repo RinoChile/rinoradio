@@ -25,4 +25,4 @@ function doSomething(obj) {
             getShout('doSomething', 'http://audio.streaminghd.cl:9146/', 1);
         }
 
-        setInterval(actualizarCada10Segundos, 10000);
+        setInterval(actualizarCada10Segundos, 100000);
