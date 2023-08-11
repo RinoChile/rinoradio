@@ -22,7 +22,7 @@ function doSomething(obj) {
         })();
 
         function actualizarCada10Segundos() {
-            getShout('doSomething', 'http://audio.streaminghd.cl:9146/', 1);
+            getShout('doSomething', 'https://audio.streaminghd.cl:9146/', 1);
         }
 
         setInterval(actualizarCada10Segundos, 100000);
